@@ -3,7 +3,7 @@
 -- Also note that these classes will not have the type `table` but instead `class` when `type(object)` is called.
 -- This is apart of the [LEEF-class](https://github.com/Luanti-Extended-Engine-Features/LEEF-class) module
 --
--- @module class.new
+-- @module class
 
 
 
@@ -35,9 +35,6 @@
 leef.Basic_class = {
     instance = false,
     --name = "leef_base_class",
-    __call = function(tbl, ...)
-        tbl:new(...)
-    end
     --__no_copy = true
 }
 local objects = {
@@ -101,8 +98,10 @@ function leef.Basic_class.new_class(...)
     local self
     if (nparents==1) or def._legacy_inherit then
         self = inherited[1]
+        assert(self)
         def.parent_class = self
     else
+        print("dummy table", def.name)
         def.parent_class = setmetatable({}, {__index=function(t, k)
             if k=="name" then
                 local new_list = {}
